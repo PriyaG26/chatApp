@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Camera, Mail, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { axiosInstance } from "../lib/axios.js";
 
 
 
@@ -16,12 +16,12 @@ const ProfilePage = () => {
   if (!confirmed) return;
 
   try {
-    await axios.delete(`http://localhost:5001/api/delete/${authUser._id}`, {
+    await axiosInstance.delete(`/delete/${authUser._id}`, {
       withCredentials: true,
     });
 
     // Optional: call logout endpoint to clear cookies/session on server
-    await axios.post("http://localhost:5001/api/auth/logout", {}, {
+    await axiosInstance.post("/auth/logout", {}, {
       withCredentials: true,
     });
 
@@ -38,7 +38,7 @@ const ProfilePage = () => {
 
 
   try {
-await axios.delete(`http://localhost:5001/api/delete/${authUser._id}`, {
+await axiosInstance.delete(`/delete/${authUser._id}`, {
   withCredentials: true,
 });
     localStorage.clear(); // clear any tokens or auth data
